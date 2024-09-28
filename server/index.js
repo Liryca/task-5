@@ -3,13 +3,12 @@ const cors = require("cors");
 const { Faker, en_US, pl, uk, sk } = require("@faker-js/faker");
 
 const app = express();
-const PORT = "https://task-5-4uqz.onrender.com" || 8080;
+const PORT = 8080;
 app.use(cors());
 app.use(express.json());
 
 let globalIdCounter = 0;
 
-// Фиксированный генератор случайных чисел
 const RandomGenerator = (seed) => {
   let m = 0x80000000; // 2 ** 31
   let a = 1103515245; // 'a' constant
@@ -25,23 +24,25 @@ const RandomGenerator = (seed) => {
 const addErrorsToString = (str, errorCount, rng) => {
   const alphabet =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let resultStr = str;
 
-  const errors = Array.from({ length: Math.floor(errorCount) }, () => {
+  for (let i = 0; i < errorCount; i++) {
     const errorType = Math.floor(rng() * 3);
-    const pos = Math.floor(rng() * str.length);
+    const pos = Math.floor(rng() * (resultStr.length + 1));
 
-    if (errorType === 0 && str.length > 0) {
-      return str.slice(0, pos) + str.slice(pos + 1);
+    if (errorType === 0 && resultStr.length > 0) {
+      resultStr =
+        resultStr.slice(0, pos > 0 ? pos - 1 : pos) + resultStr.slice(pos);
     } else if (errorType === 1) {
       const randomChar = alphabet.charAt(Math.floor(rng() * alphabet.length));
-      return str.slice(0, pos) + randomChar + str.slice(pos);
-    } else if (errorType === 2 && pos > 0) {
-      const char = str[pos];
-      return str.slice(0, pos - 1) + char + str[pos - 1] + str.slice(pos + 1);
+      resultStr = resultStr.slice(0, pos) + randomChar + resultStr.slice(pos);
+    } else if (errorType === 2 && resultStr.length > 0) {
+      const char = resultStr[pos > 0 ? pos - 1 : 0];
+      resultStr = resultStr.slice(0, pos) + char + resultStr.slice(pos);
     }
-    return str;
-  });
-  return errors.reduce((acc, curr) => curr, str);
+  }
+
+  return resultStr;
 };
 
 const generateLocalizedFaker = (region) => {

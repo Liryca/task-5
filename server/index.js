@@ -3,7 +3,7 @@ const cors = require("cors");
 const { Faker, en_US, pl, uk, sk } = require("@faker-js/faker");
 
 const app = express();
-const PORT = "https://task-5-4uqz.onrender.com" || 5000;
+const PORT = 5000 || "https://task-5-4uqz.onrender.com";
 app.use(cors());
 app.use(express.json());
 

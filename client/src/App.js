@@ -140,7 +140,7 @@ const App = () => {
                 className="form-control mt-2"
                 min="0"
                 max="1000"
-                step="0.01"
+                step="0.25"
                 value={errorCount}
                 onChange={(e) => handleErrorCountChange(e.target.value)}
               />

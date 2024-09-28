@@ -3,7 +3,7 @@ const cors = require("cors");
 const { Faker, en_US, pl, uk, sk } = require("@faker-js/faker");
 
 const app = express();
-const PORT = 8080;
+const PORT = "https://task-5-4uqz.onrender.com";
 app.use(cors());
 app.use(express.json());
 
@@ -97,5 +97,5 @@ app.get("/generate", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running ${PORT}`);
 });

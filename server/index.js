@@ -3,7 +3,7 @@ const cors = require("cors");
 const { Faker, en_US, pl, uk, sk } = require("@faker-js/faker");
 
 const app = express();
-const PORT = "https://task-5-4uqz.onrender.com";
+const PORT = "https://task-5-4uqz.onrender.com" || 8080;
 app.use(cors());
 app.use(express.json());
 
@@ -20,7 +20,6 @@ const RandomGenerator = (seed) => {
     return state / m; // Вернуть число от 0 до 1
   };
 };
-
 const addErrorsToString = (str, errorCount, rng) => {
   const alphabet =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
